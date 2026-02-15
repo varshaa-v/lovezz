@@ -1,67 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>For You 🖤</title>
+  <title>For You 🖤</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: #0a0a0a;
+      color: #e6e6e6;
+      font-family: 'Playfair Display', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    .poem {
+      max-width: 500px;
+      padding: 40px;
+      text-align: center;
+      line-height: 1.8;
+      animation: fade 3s ease;
+      position: relative;
+      z-index: 2;
+    }
 
-<style>
-body{
-  margin:0;
-  background:#0a0a0a;
-  color:#e6e6e6;
-  font-family:'Playfair Display', serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-}
-.poem{
-  max-width:500px;
-  padding:40px;
-  text-align:center;
-  line-height:1.8;
-  animation:fade 3s ease;
-}
-h2{
-  font-weight:normal;
-  letter-spacing:2px;
-  margin-bottom:30px;
-}
-@keyframes fade{
-  from{opacity:0;}
-  to{opacity:1;}
-}
-</style>
+    h2 {
+      font-weight: normal;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #ff4d6d; }
+      to { text-shadow: 0 0 20px #ff99b3, 0 0 30px #ff4d6d; }
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      color: #ff4d6d;
+      font-size: 24px;
+      animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="poem">
+<div id="lockscreen" style="text-align:center;">
+  <h2>Enter Password 💌</h2>
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="unlock()">Open</button>
+</div>
+
+<div class="poem" id="content" style="display:none;">
   <h2>Heyy Bhuviii 🖤</h2>
   <p>
-It’s Varshh, writing to you,
-Because Valentine’s felt incomplete without these words.
-So before anything else, let me ask you this, bby!
-Will you be my Valentine? 💋
-Even when days pass without us sharing time,
-My heart never forgets where it belongs.
-I miss you more than I can explain,
-And still, I choose you—today, tomorrow, always.
-No matter who walks into my life, or where life takes us,
-You are the one my soul holds onto forever.
-You know it… and I hope your heart whispers the same truth back to mine.<br>
-So here’s my heart, wrapped in this little letter, 
-Not just for Valentine’s Day,
-But for every day I want you by my side,
-Now, always, and for a lifetime. ❤️<br>
+    It’s Varshh, writing to you,<br>
+    Because Valentine’s felt incomplete without these words.<br>
+    So before anything else, let me ask you this, bby!<br>
+    Will you be my Valentine? 💋<br><br>
+    Even when days pass without us sharing time,<br>
+    My heart never forgets where it belongs.<br>
+    I miss you more than I can explain,<br>
+    And still, I choose you—today, tomorrow, always.<br><br>
+    No matter who walks into my life, or where life takes us,<br>
+    You are the one my soul holds onto forever.<br>
+    You know it… and I hope your heart whispers the same truth back to mine.<br><br>
+    So here’s my heart, wrapped in this little letter,<br>
+    Not just for Valentine’s Day,<br>
+    But for every day I want you by my side,<br>
+    Now, always, and for a lifetime. ❤️<br><br>
     In the quiet of dark nights,<br>
     where words fail and hearts speak,<br>
     you exist —<br>
     not loudly,<br>
     but deeply.
   </p>
-
   <p>
     If love had a shade,<br>
     it wouldn’t be bright,<br>
@@ -69,13 +97,36 @@ Now, always, and for a lifetime. ❤️<br>
     like this moment,<br>
     like you.
   </p>
-
   <p>— Varsh</p>
 </div>
 
 <audio autoplay loop>
   <source src="https://www.bensound.com/bensound-music/bensound-tenderness.mp3">
 </audio>
+
+<script>
+  function unlock() {
+    const pass = document.getElementById("password").value;
+    if(pass === "bhuvivarsh") {
+      document.getElementById("lockscreen").style.display = "none";
+      document.getElementById("content").style.display = "block";
+      spawnHearts();
+    } else {
+      alert("Wrong password 💔");
+    }
+  }
+
+  function spawnHearts() {
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }, 800);
+  }
+</script>
 
 </body>
 </html>
